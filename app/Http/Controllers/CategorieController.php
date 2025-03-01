@@ -35,7 +35,7 @@ class CategorieController extends Controller
             return $this->error('El id debe ser un número', [], 400);
         }
 
-        $categorie = Categorie::find($id);
+        $categorie = Categorie::with('products')->find($id);
 
         if (!$categorie) {
             return $this->error('Categoria no encontrada', [], 404);
