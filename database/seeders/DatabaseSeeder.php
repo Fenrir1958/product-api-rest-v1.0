@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call(
+        $this->call([
+            CategoriesSeeder::class,
             ProductsSeeder::class,
-            CategoriesSeeder::class
-        );
+        ]);
 
         User::factory()->create([
             'name' => 'admin',
