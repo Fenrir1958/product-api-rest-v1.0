@@ -71,7 +71,7 @@ class CategoriesSeeder extends Seeder
             $category = Categorie::create($category);
 
             if (!$category) {
-                Log::error('Error al crear la categoría: ' . $category->name);
+                Log::error('Error al crear la categoría');
             }
         }
     }
