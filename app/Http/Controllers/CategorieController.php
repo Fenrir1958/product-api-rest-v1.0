@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Categorie\StoreCategorieRequest;
 use App\Http\Requests\Categorie\UpdateCategorieRequest;
 use App\Models\Categorie;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -76,5 +77,26 @@ class CategorieController extends Controller
         $categorie->delete();
 
         return $this->success('Categoria eliminada con exito');
+    }
+
+    public function availableProductsPerCategory(string $id): JsonResponse
+    {
+        if (!is_numeric($id)) {
+            return $this->error('El id debe ser un número', [], 400);
+        }
+
+        $category = Categorie::with('products')->whereHas('products', function (Builder $query) {
+            $query->where('quantity', '>', 0);
+        })->find($id);
+
+        $availableProducts = $category->products;
+
+        if ($availableProducts->isEmpty()) {
+            return $this->error('No hay productos disponibles para esta categoria', [], 404);
+        }
+
+        $totalQuantityProducts = $category->products->sum('quantity');
+
+        return $this->success('Productos disponibles obtenidos con exito', ['products' => $availableProducts, 'quantities' => $totalQuantityProducts]);
     }
 }

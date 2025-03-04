@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->controller(CategorieController::class)->group
     Route::get('/showCategorie/{id}', 'show');
     Route::put('/updateCategorie/{id}', 'update');
     Route::delete('/deleteCategorie/{id}', 'destroy');
+    Route::get('/getProductsPerCategory/{id}', 'availableProductsPerCategory');
+    
 });
 
 Route::middleware('auth:sanctum')->controller(ProductController::class)->group(function () {
@@ -29,3 +31,5 @@ Route::middleware('auth:sanctum')->controller(ProductController::class)->group(f
     Route::put('/updateProduct/{id}', 'update');
     Route::delete('/deleteProduct/{id}', 'destroy');
 });
+
+
