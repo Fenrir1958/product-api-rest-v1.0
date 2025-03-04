@@ -89,11 +89,11 @@ class CategorieController extends Controller
             $query->where('quantity', '>', 0);
         })->find($id);
 
-        $availableProducts = $category->products;
-
-        if ($availableProducts->isEmpty()) {
-            return $this->error('No hay productos disponibles para esta categoria', [], 404);
+        if (!$category?->products) {
+            return $this->error('No hay productos disponibles para esta categoría', [], 404);
         }
+
+        $availableProducts = $category?->products;
 
         $totalQuantityProducts = $category->products->sum('quantity');
 
