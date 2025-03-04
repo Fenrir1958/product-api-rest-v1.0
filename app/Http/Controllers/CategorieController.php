@@ -13,7 +13,7 @@ class CategorieController extends Controller
     //
     public function index(): JsonResponse
     {
-        $categories = Categorie::paginate(25);
+        $categories = Categorie::with('products')->paginate(50);
 
         return $this->success('Categorias obtenidas con exito', ['categories' => $categories]);
     }
