@@ -13,7 +13,7 @@ class ProductController extends Controller
     //
     public function index(): JsonResponse
     {
-        $products = Product::paginate(25);
+        $products = Product::with('categorie')->paginate(50);
 
         return $this->success('Productos obtenidos con exito', ['products' => $products]);
     }
